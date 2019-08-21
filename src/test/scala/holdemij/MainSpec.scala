@@ -1,12 +1,12 @@
 package holdemij
 
-import holdemij.Main._
 import org.scalatest._
 
 class MainSpec extends FunSuite with Matchers {
 
-  test("add given two numbers then returns sum") {
-    add(2, 3) shouldBe 5
+  test("Check that the deck is of a right size") {
+    val testDeck = new Deck
+    testDeck.cards shouldBe 52
   }
 }
 

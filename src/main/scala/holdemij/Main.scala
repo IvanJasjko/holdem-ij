@@ -1,12 +1,12 @@
 package holdemij
 
-import GamePrinter.printGame
-
 object Main {
 
   def main(args: Array[String]): Unit = {
     val myDeck = new Deck
-    val dealer = new Dealer(myDeck.cards)
-    printGame(dealer)
+    println(myDeck.cards)
+    println(myDeck.deal(2))
+    println(myDeck.cards)
+
   }
 }

@@ -1,5 +1,6 @@
 package holdemij
 
+import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
 class Deck {
@@ -16,7 +17,12 @@ class Deck {
     cardList.flatten
   }
 
-  val cards: Seq[Card] = Random.shuffle(makeDeck())
-  val size: Int = cards.length
+  val cards: ListBuffer[Card] = Random.shuffle(makeDeck()).to[ListBuffer]
+
+  def deal(n: Int): Seq[Card] = {
+    val hand = cards.take(n)
+    hand.foreach(cards.-=)
+    hand
+  }
 
 }

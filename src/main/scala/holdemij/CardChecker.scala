@@ -1,0 +1,5 @@
+package holdemij
+
+object CardChecker {
+
+}

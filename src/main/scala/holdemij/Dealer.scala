@@ -1,10 +1,11 @@
 package holdemij
 
 object Dealer {
-  val deck = new Deck
+
+  lazy val deck = new Deck
 
   def dealHands(n: Int): Seq[Seq[Card]] = {
-    for (i <- 0 to n) yield (deck.draw(2))
+    for (_ <- 1 to n) yield deck.draw(2)
   }
 
   def dealFlop(): Seq[Card] = {

@@ -4,22 +4,28 @@ import CardChecker._
 
 object Game {
 
-  def processGame(hands: Seq[Seq[Card]], flop: Seq[Card], turn: Seq[Card], river: Seq[Card]): Unit = {
+  def processGame(hands: Seq[Cards], flop: Cards, turn: Cards, river: Cards): Unit = {
     val games = hands.map { hand => hand ++ flop ++ turn ++ river }
       .zipWithIndex
 
     val results = games.map {
       case (game, player) =>
-        (s"Player ${player + 1}", game.take(2), getScore(game).combination, getScore(game).score)
+        val scoreCheck = getScore(game)
+        Result(s"Player ${player + 1}", game.take(2), scoreCheck.combination, scoreCheck.score)
     }
 
-    results.foreach { result => println(s"${result._1}'s hand: ${decodeCards(result._2)}  [${result._3}]") }
-    println(s"Table: ${decodeCards(flop)} ${decodeCards(turn)} ${decodeCards(river)}")
-    val winner = results.maxBy(_._4)
-    println(s"Winner: ${winner._1} with a ${winner._3}!")
+    results.foreach {
+      result =>
+        println(s"${result.player}'s hand: ${decodeCards(result.hand)}  [${result.combination}]")
+    }
+
+    println(s"\nTable: ${decodeCards(flop)} ${decodeCards(turn)} ${decodeCards(river)}")
+
+    val winner = results.maxBy(_.score)
+    println(s"\nWinner: ${winner.player} with a ${winner.combination}!")
   }
 
-  def decodeCards(cards: Seq[Card]): String = {
+  private def decodeCards(cards: Seq[Card]): String = {
     cards.map(card => s"(${card.value} of ${card.suit})").mkString(" ")
   }
 

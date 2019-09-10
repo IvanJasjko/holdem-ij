@@ -13,7 +13,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("4", "Clubs", 3),
       Card("7", "Spades", 6),
       Card("A", "Spades", 13))
-    CardChecker.getScore(testCombination) shouldBe Outcome("Flush", 500)
+    CardChecker.getScore(testCombination) shouldBe Outcome("Flush", 500, 32)
   }
 
   test("Test pair") {
@@ -25,7 +25,19 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("4", "Clubs", 3),
       Card("7", "Spades", 6),
       Card("A", "Clubs", 13))
-    CardChecker.getScore(testCombination) shouldBe Outcome("Pair", 100)
+    CardChecker.getScore(testCombination) shouldBe Outcome("Pair", 100, 12, 29)
+  }
+
+  test("Test 3 of a kind") {
+    val testCombination1 = Seq(
+      Card("J", "Diamonds", 10),
+      Card("J", "Clubs", 10),
+      Card("J", "Spades", 10),
+      Card("2", "Clubs", 1),
+      Card("4", "Diamonds", 3),
+      Card("9", "Spades", 8),
+      Card("A", "Hearts", 13))
+    CardChecker.getScore(testCombination1) shouldBe Outcome("Three of a Kind", 300, 30, 25)
   }
 
   test("Test 4 of a kind") {
@@ -37,7 +49,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("A", "Diamonds", 13),
       Card("A", "Spades", 13),
       Card("A", "Hearts", 13))
-    CardChecker.getScore(testCombination) shouldBe Outcome("Four of a Kind", 700)
+    CardChecker.getScore(testCombination) shouldBe Outcome("Four of a Kind", 700, 52, 30)
   }
 
   test("Test full house") {
@@ -49,7 +61,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("A", "Diamonds", 13),
       Card("A", "Spades", 13),
       Card("A", "Hearts", 13))
-    CardChecker.getScore(testCombination1) shouldBe Outcome("Full House", 600)
+    CardChecker.getScore(testCombination1) shouldBe Outcome("Full House", 600, 13, 10)
 
     val testCombination2 = Seq(
       Card("J", "Diamonds", 10),
@@ -59,7 +71,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("K", "Diamonds", 12),
       Card("A", "Spades", 13),
       Card("A", "Hearts", 13))
-    CardChecker.getScore(testCombination2) shouldBe Outcome("Full House", 600)
+    CardChecker.getScore(testCombination2) shouldBe Outcome("Full House", 600, 10, 13)
   }
 
   test("Test straight") {
@@ -71,7 +83,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("6", "Diamonds", 5),
       Card("7", "Spades", 6),
       Card("8", "Hearts", 7))
-    CardChecker.getScore(testCombination1) shouldBe Outcome("Straight",400)
+    CardChecker.getScore(testCombination1) shouldBe Outcome("Straight",400, 25)
 
     val testCombination2 = Seq(
       Card("J", "Diamonds", 10),
@@ -81,7 +93,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("4", "Diamonds", 3),
       Card("5", "Spades", 4),
       Card("6", "Hearts", 5))
-    CardChecker.getScore(testCombination2) shouldBe Outcome("Straight",400)
+    CardChecker.getScore(testCombination2) shouldBe Outcome("Straight",400, 15)
 
     val testCombination3 = Seq(
       Card("J", "Diamonds", 10),
@@ -91,7 +103,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("5", "Diamonds", 4),
       Card("6", "Spades", 5),
       Card("K", "Hearts", 12))
-    CardChecker.getScore(testCombination3) shouldBe Outcome("Straight",400)
+    CardChecker.getScore(testCombination3) shouldBe Outcome("Straight",400, 15)
 
     val testCombination4 = Seq(
       Card("J", "Diamonds", 10),
@@ -101,7 +113,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("5", "Diamonds", 4),
       Card("6", "Spades", 5),
       Card("7", "Hearts", 6))
-    CardChecker.getScore(testCombination4) shouldBe Outcome("Straight",400)
+    CardChecker.getScore(testCombination4) shouldBe Outcome("Straight",400, 20)
   }
 
   test("Test straight flush") {
@@ -113,7 +125,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("8", "Diamonds", 7),
       Card("2", "Spades", 1),
       Card("9", "Spades", 8))
-    CardChecker.getScore(testCombination1) shouldBe Outcome("Straight Flush", 800)
+    CardChecker.getScore(testCombination1) shouldBe Outcome("Straight Flush", 800, 30)
   }
 
   test("Test royal flush") {
@@ -127,5 +139,4 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("2", "Diamonds", 1))
     CardChecker.getScore(testCombination1) shouldBe Outcome("Royal Flush", 900)
   }
-
 }

@@ -20,14 +20,26 @@ object CardChecker {
       case _ => Outcome("High Card", hand.maxBy(_.score).score)
     }
   }
-
+  @tailrec
   private def isRoyalFlush(combination: Cards): Boolean = {
-    isStraightFlush(combination) &&
-      Set(9, 10, 11, 12, 13).subsetOf(combination.map(_.score).toSet)
+    val sortedCards = combination.map(_.score).sorted
+    if (sortedCards.length < 5)
+      false
+    else if (isStraightFlush(combination.take(5)) && combination.take(5).head.score == 9)
+      true
+    else
+      isRoyalFlush(combination.sortBy(_.score).tail)
   }
 
+  @tailrec
   private def isStraightFlush(combination: Cards): Boolean = {
-    isFlush(combination) && isStraight(combination)
+    val sortedCards = combination.map(_.score).sorted
+    if (sortedCards.length < 5)
+      false
+    else if (sortedCards.take(5).sliding(2).forall(pair => pair.head == pair(1) - 1) && isFlush(combination.take(5)))
+      true
+    else
+      isStraightFlush(combination.sortBy(_.score).tail)
   }
 
   private def isFourOfAKind(combination: Cards): Boolean = {

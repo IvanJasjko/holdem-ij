@@ -102,7 +102,6 @@ object CardChecker {
   }
 
   private def spareCardScore(all_cards: Cards, combo: Cards): Int = {
-    println(combo)
     all_cards.diff(combo).map(_.score).sum
   }
 }

@@ -4,7 +4,7 @@ import CardChecker._
 
 object Game {
 
-  def processGame(hands: Seq[Cards], flop: Cards, turn: Cards, river: Cards): Seq[Result] = {
+  def processGame(hands: Seq[Cards], flop: Cards, turn: Cards, river: Cards, debug: Boolean = false): Seq[Result] = {
     val games = hands.map { hand => hand ++ flop ++ turn ++ river }
       .zipWithIndex
 
@@ -20,19 +20,22 @@ object Game {
         )
     }
 
-    results.foreach {
-      result =>
-        println(s"${result.player}'s hand: ${decodeCards(result.hand)}  [${result.combination}]")
-    }
-
-    println(s"\nTable: ${decodeCards(flop)} ${decodeCards(turn)} ${decodeCards(river)}")
-
     val topScore = results.maxBy(player => (player.score, player.combo_score, player.kicker_score))
     val winners = results
       .filter(result =>
         result.score == topScore.score &&
           result.combo_score == topScore.combo_score &&
           result.kicker_score == topScore.kicker_score)
+
+    if (debug)
+      return winners
+
+    results.foreach {
+      result =>
+        println(s"${result.player}'s hand: ${decodeCards(result.hand)}  [${result.combination}]")
+    }
+
+    println(s"\nTable: ${decodeCards(flop)} ${decodeCards(turn)} ${decodeCards(river)}")
 
     if (winners.size == 1) {
       println(s"\nWinner: ${winners.head.player} with a ${winners.head.combination}!")

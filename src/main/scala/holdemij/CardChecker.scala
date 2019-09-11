@@ -15,7 +15,7 @@ object CardChecker {
       case _ if isThreeOfAKind(combination)._1 => Outcome("Three of a Kind", 300, isThreeOfAKind(combination)._2, isThreeOfAKind(combination)._3)
       case _ if isTwoPairs(combination)._1 => Outcome("Two Pairs", 200, isTwoPairs(combination)._2, isTwoPairs(combination)._3)
       case _ if isPair(combination)._1 => Outcome("Pair", 100, isPair(combination)._2, isPair(combination)._3)
-      case _ => Outcome("High Card", 0, spareCardScore(combination, combination.sortBy(_.score).take(2)))
+      case _ => Outcome("High Card", combination.maxBy(_.score).score, spareCardScore(combination, Seq(combination.maxBy(_.score))))
     }
   }
 
@@ -88,8 +88,8 @@ object CardChecker {
   private def isTwoPairs(combination: Cards): (Boolean, Int, Int) = {
     val pairs = combination.groupBy(_.score).filter { case (_, cardz) => cardz.length == 2 }
     if (pairs.size >= 2) {
-      val sortedPairs = pairs.toSeq.sortBy(_._1).take(2).flatMap(_._2)
-      return (true, sortedPairs.map(_.score).sum, spareCardScore(combination, sortedPairs))
+      val bestPairScore = pairs.toSeq.map(_._1).max
+      return (true, bestPairScore, spareCardScore(combination, pairs.toSeq.sortBy(_._1).take(2).flatMap(_._2)))
     }
     (false, 0, 0)
   }
@@ -102,6 +102,6 @@ object CardChecker {
   }
 
   private def spareCardScore(all_cards: Cards, combo: Cards): Int = {
-    all_cards.diff(combo).map(_.score).sum
+    all_cards.diff(combo).map(_.score).sorted.takeRight(5 - combo.length).sum
   }
 }

@@ -4,7 +4,7 @@ import CardChecker._
 
 object Game {
 
-  def processGame(hands: Seq[Cards], flop: Cards, turn: Cards, river: Cards): Unit = {
+  def processGame(hands: Seq[Cards], flop: Cards, turn: Cards, river: Cards): Seq[Result] = {
     val games = hands.map { hand => hand ++ flop ++ turn ++ river }
       .zipWithIndex
 
@@ -43,6 +43,7 @@ object Game {
         winner => println(s"${winner.player} with a ${winner.combination}!")
       }
     }
+    winners
   }
 
   private def decodeCards(cards: Cards): String = {

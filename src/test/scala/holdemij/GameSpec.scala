@@ -92,6 +92,19 @@ class GameSpec extends FunSuite with Matchers {
     Game.processGame(hands, flop, turn, river, debug = true).head.player shouldBe "Player 2"
   }
 
+  test("2 pairs on 2nd pair") {
+
+    val hand1 = Seq(Card("6", "Diamonds", 5), Card("4", "Hearts", 3))
+    val hand2 = Seq(Card("6", "Spades", 5), Card("3", "Hearts", 2))
+    val hands = Seq(hand1, hand2)
+
+    val flop = Seq(Card("6", "Spades", 5), Card("4", "Diamonds", 3), Card("2", "Diamonds", 1))
+    val turn = Seq(Card("8", "Clubs", 7))
+    val river = Seq(Card("A", "Hearts", 13))
+    Game.processGame(hands, flop, turn, river, debug = true).length shouldBe 1
+    Game.processGame(hands, flop, turn, river, debug = true).head.player shouldBe "Player 1"
+  }
+
   test("4 of a kind") {
 
     val hand1 = Seq(Card("A", "Diamonds", 13), Card("A", "Spades", 13))

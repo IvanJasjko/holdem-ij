@@ -17,7 +17,7 @@ object CardChecker {
       case _ if isThreeOfAKind(combination)._1 => Outcome("Three of a Kind", 300, isThreeOfAKind(combination)._2, isThreeOfAKind(combination)._3)
       case _ if isTwoPairs(combination)._1 => Outcome("Two Pairs", 200, isTwoPairs(combination)._2, isTwoPairs(combination)._3)
       case _ if isPair(combination)._1 => Outcome("Pair", 100, isPair(combination)._2, isPair(combination)._3)
-      case _ => Outcome("High Card", 0, hand.maxBy(_.score).score, hand.minBy(_.score).score)
+      case _ => Outcome("High Card", 0, combination.map(_.score).sum, 0)
     }
   }
 

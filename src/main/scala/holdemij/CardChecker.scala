@@ -5,8 +5,6 @@ import scala.annotation.tailrec
 object CardChecker {
 
   def getScore(combination: Cards): Outcome = {
-    //First 2 cards are always players hand when the combination is made
-    val hand = combination.take(2)
     combination match {
       case _ if isRoyalFlush(combination) => Outcome("Royal Flush", 900)
       case _ if isStraightFlush(combination)._1 => Outcome("Straight Flush", 800, isStraightFlush(combination)._2)
@@ -17,7 +15,7 @@ object CardChecker {
       case _ if isThreeOfAKind(combination)._1 => Outcome("Three of a Kind", 300, isThreeOfAKind(combination)._2, isThreeOfAKind(combination)._3)
       case _ if isTwoPairs(combination)._1 => Outcome("Two Pairs", 200, isTwoPairs(combination)._2, isTwoPairs(combination)._3)
       case _ if isPair(combination)._1 => Outcome("Pair", 100, isPair(combination)._2, isPair(combination)._3)
-      case _ => Outcome("High Card", 0, combination.map(_.score).sum, 0)
+      case _ => Outcome("High Card", 0, spareCardScore(combination, combination.sortBy(_.score).take(2)))
     }
   }
 
@@ -104,6 +102,7 @@ object CardChecker {
   }
 
   private def spareCardScore(all_cards: Cards, combo: Cards): Int = {
+    println(combo)
     all_cards.diff(combo).map(_.score).sum
   }
 }

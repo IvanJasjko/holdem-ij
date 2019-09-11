@@ -4,6 +4,18 @@ import org.scalatest.{FunSuite, Matchers}
 
 class CardCheckerSpec extends FunSuite with Matchers {
 
+  test("High Card") {
+    val testCombination1 = Seq(
+      Card("9", "Diamonds", 8),
+      Card("10", "Spades", 9),
+      Card("4", "Clubs", 3),
+      Card("K", "Diamonds", 12),
+      Card("7", "Hearts", 6),
+      Card("A", "Diamonds", 13),
+      Card("2", "Diamonds", 1))
+    CardChecker.getScore(testCombination1) shouldBe Outcome("High Card", 0, 48)
+  }
+
   test("Test flush") {
     val testCombination = Seq(
       Card("2", "Spades", 1),

@@ -45,7 +45,7 @@ object Game {
     }
   }
 
-  private def decodeCards(cards: Seq[Card]): String = {
+  private def decodeCards(cards: Cards): String = {
     cards.map(card => s"(${card.value} of ${card.suit})").mkString(" ")
   }
 

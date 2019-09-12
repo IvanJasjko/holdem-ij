@@ -79,7 +79,7 @@ class GameSpec extends FunSuite with Matchers {
     Game.processGame(hands, flop, turn, river).length shouldBe 2
   }
 
-  test("2 pairs") {
+  test("2 pairs with equal sum") {
 
     val hand1 = Seq(Card("6", "Diamonds", 5), Card("4", "Hearts", 3))
     val hand2 = Seq(Card("8", "Spades", 7), Card("2", "Hearts", 1))
@@ -117,4 +117,5 @@ class GameSpec extends FunSuite with Matchers {
     Game.processGame(hands, flop, turn, river, debug = true).length shouldBe 1
     Game.processGame(hands, flop, turn, river, debug = true).head.player shouldBe "Player 1"
   }
+
 }

@@ -6,7 +6,7 @@ class MainSpec extends FunSuite with Matchers {
 
   test("Check that the deck is of a right size") {
     val testDeck = new Deck
-    testDeck.cards shouldBe 52
+    testDeck.cards.length shouldBe 52
   }
 }
 

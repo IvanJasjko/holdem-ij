@@ -13,7 +13,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("7", "Hearts", 6),
       Card("A", "Diamonds", 13),
       Card("2", "Diamonds", 1))
-    CardChecker.getScore(testCombination1) shouldBe Outcome("High Card", 0, 48)
+    CardChecker.getScore(testCombination1) shouldBe Outcome("High Card", 13, 35)
   }
 
   test("Test flush") {
@@ -37,7 +37,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("4", "Clubs", 3),
       Card("7", "Spades", 6),
       Card("A", "Clubs", 13))
-    CardChecker.getScore(testCombination) shouldBe Outcome("Pair", 100, 12, 29)
+    CardChecker.getScore(testCombination) shouldBe Outcome("Pair", 100, 12, 26)
   }
 
   test("Test 3 of a kind") {
@@ -49,7 +49,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("4", "Diamonds", 3),
       Card("9", "Spades", 8),
       Card("A", "Hearts", 13))
-    CardChecker.getScore(testCombination1) shouldBe Outcome("Three of a Kind", 300, 30, 25)
+    CardChecker.getScore(testCombination1) shouldBe Outcome("Three of a Kind", 300, 30, 21)
   }
 
   test("Test 4 of a kind") {
@@ -61,7 +61,7 @@ class CardCheckerSpec extends FunSuite with Matchers {
       Card("A", "Diamonds", 13),
       Card("A", "Spades", 13),
       Card("A", "Hearts", 13))
-    CardChecker.getScore(testCombination) shouldBe Outcome("Four of a Kind", 700, 52, 30)
+    CardChecker.getScore(testCombination) shouldBe Outcome("Four of a Kind", 700, 52, 10)
   }
 
   test("Test full house") {
